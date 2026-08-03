@@ -68,3 +68,87 @@ Lists are mutable and unhashable.
 Dictionary keys must be hashable.
 
 Use tuples or omit immutable shared inputs from the state.
+
+## Stone Game III
+
+**Date:** 2026-08-03
+
+### Mistakes
+
+#### 1. Tried a greedy strategy for an optimal-play game
+
+**Classification:** Logic
+
+**What I did**
+
+At each turn, I chose the option (taking 1, 2, or 3 stones) with the largest immediate sum.
+
+**Why it was incorrect**
+
+The objective is to maximize the final score difference after both players play optimally, not the immediate gain. A locally optimal move can allow the opponent to obtain an even larger advantage.
+
+**Why I might have thought it was correct**
+
+The problem asks to maximize the score, which can make it tempting to optimize the current move instead of the entire game.
+
+**How to recognize this mistake in future problems**
+
+Whenever two players take turns and both play optimally, question any greedy approach first.
+
+**How to avoid repeating it**
+
+Think in terms of game states and future consequences. Consider minimax or score-difference DP before attempting greedy.
+
+---
+
+#### 2. Chose an incorrect DP state
+
+**Classification:** Data Structure
+
+**What I did**
+
+Initially memoized using `(sumA, sumB)` and later `(index, currentPlayer)`.
+
+**Why it was incorrect**
+
+The future of the game depends only on the remaining stones. Previous scores do not affect future decisions, and the current player is already implicit in the score-difference recurrence.
+
+**Why I might have thought it was correct**
+
+I modeled the game using the actual scores instead of identifying the minimal state needed for future computation.
+
+**How to recognize this mistake in future problems**
+
+Ask whether each variable in the DP state can change the remaining subproblem. If removing it does not change future decisions, it should not be part of the state.
+
+**How to avoid repeating it**
+
+Define the DP state as the smallest amount of information required to uniquely determine the remaining problem.
+
+---
+
+#### 3. Generated invalid transitions
+
+**Classification:** Edge Case
+
+**What I did**
+
+Initially represented impossible moves using placeholder values instead of only exploring valid moves.
+
+**Why it was incorrect**
+
+DP transitions should correspond only to legal game moves. Exploring illegal transitions complicates the recurrence and can introduce subtle bugs.
+
+**How to recognize this mistake in future problems**
+
+Whenever a move has constraints, generate only valid transitions instead of filtering them afterward.
+
+**How to avoid repeating it**
+
+Iterate only over legal choices using a loop with boundary checks.
+
+### Lessons
+
+- In optimal-play games, think about **future advantage**, not immediate gain.
+- The best DP state is usually the smallest state that completely describes the remaining subproblem.
+- Score-difference DP often eliminates the need to explicitly track players or individual scores.

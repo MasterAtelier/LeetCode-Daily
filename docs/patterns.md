@@ -131,3 +131,57 @@ This pattern combines **Interval DP** with **Minimax**, allowing the entire game
 - Ask whether **score difference** is sufficient to represent the state.
 - Many two-player DP problems become significantly simpler once the correct state is defined.
 - Always look for opportunities to reduce unnecessary state variables before writing the recurrence.
+
+
+
+## Pattern: Minimax DP (Score Difference)
+
+### Recognition Signals
+
+Look for problems involving:
+
+- Two players taking turns.
+- Both players play optimally.
+- Determine the winner.
+- Each move offers a small number of choices.
+- Maximize your own score while minimizing your opponent's.
+
+### When to Use
+
+Use this pattern when:
+
+- The remaining game depends only on the current state.
+- Both players have perfect information.
+- The game has no randomness.
+- Tracking the score difference is simpler than tracking both players' scores.
+
+### Reusable Template
+
+1. Define `dp(state)` as the maximum score difference the current player can achieve.
+2. Enumerate every legal move.
+3. Compute the immediate gain.
+4. Subtract the opponent's optimal score difference from the next state.
+5. Return the maximum over all legal moves.
+
+### Common Variations
+
+- Taking 1 to K items.
+- Picking from either end of an array.
+- Interval game DP.
+- Recursive memoization.
+- Bottom-up DP.
+
+### Related Patterns
+
+- Minimax Search
+- Interval DP
+- Dynamic Programming on Arrays
+
+### Problems Using This Pattern
+
+- 1406. Stone Game III
+- 877. Stone Game
+- 1140. Stone Game II
+- 1690. Stone Game VII
+- 486. Predict the Winner
+- 464. Can I Win
