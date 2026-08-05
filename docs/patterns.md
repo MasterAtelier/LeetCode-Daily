@@ -185,3 +185,27 @@ Use this pattern when:
 - 1690. Stone Game VII
 - 486. Predict the Winner
 - 464. Can I Win
+
+### Pattern: Reachability + Component Validation
+
+#### Recognition Signals
+
+- "Starting from node X"
+- "Directly or indirectly"
+- "Reachable methods"
+- "Remove all reachable nodes"
+- "Validate whether the group can be removed"
+
+#### Template
+
+1. Traverse from the given source.
+2. Record the reachable set.
+3. Validate the set against the problem's additional constraints.
+4. Produce the final answer.
+
+#### Variation
+
+Many graph problems consist of:
+- Discover a component.
+- Validate the component.
+- Answer based on validation.

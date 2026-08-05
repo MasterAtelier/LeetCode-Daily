@@ -152,3 +152,36 @@ Iterate only over legal choices using a loop with boundary checks.
 - In optimal-play games, think about **future advantage**, not immediate gain.
 - The best DP state is usually the smallest state that completely describes the remaining subproblem.
 - Score-difference DP often eliminates the need to explicitly track players or individual scores.
+
+
+## Remove Methods From Project
+
+**Date:** 2026-08-05
+
+### Mistakes
+
+#### 1. Used Union-Find instead of graph traversal
+- **Category:** Data Structure
+- **Issue:** Treated directed reachability as undirected connectivity.
+- **Why it seemed reasonable:** Union-Find is commonly used for grouping connected nodes.
+- **Lesson:** Reachability in directed graphs requires BFS/DFS, not Union-Find.
+
+#### 2. Converted directed edges into undirected edges
+- **Category:** Logic
+- **Issue:** Added reverse edges that do not exist.
+- **Lesson:** Preserve edge direction unless the problem explicitly states the graph is undirected.
+
+#### 3. Explored only one or two levels of neighbors
+- **Category:** Logic
+- **Issue:** Missed methods reachable through longer paths.
+- **Lesson:** When a problem says "directly or indirectly", perform a complete graph traversal.
+
+#### 4. Marked nodes as visited too late during BFS
+- **Category:** Implementation
+- **Issue:** Could enqueue the same node multiple times.
+- **Lesson:** Mark nodes visited when enqueueing them.
+
+#### 5. Initially forgot the incoming-edge validation
+- **Category:** Logic
+- **Issue:** Identified suspicious methods correctly but didn't verify whether they could be removed.
+- **Lesson:** After finding a component, carefully read the problem for any additional validity conditions.
