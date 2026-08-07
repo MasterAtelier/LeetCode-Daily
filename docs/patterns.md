@@ -209,3 +209,20 @@ Many graph problems consist of:
 - Discover a component.
 - Validate the component.
 - Answer based on validation.
+
+## Greedy Suffix Reconstruction with Prime Factor Accounting
+
+### Recognition Signals
+
+- Lexicographically smallest valid number
+- Product divisibility
+- Large numeric strings
+- Prime factor constraints
+
+### When to Use
+
+Use when each digit contributes independent prime factors and the goal is to construct the smallest valid number without enumerating candidates.
+
+### New Observation
+
+Maintaining prefix prime-factor counts enables O(n) greedy reconstruction after a single right-to-left scan.
