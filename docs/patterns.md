@@ -223,6 +223,141 @@ Many graph problems consist of:
 
 Use when each digit contributes independent prime factors and the goal is to construct the smallest valid number without enumerating candidates.
 
+
+
 ### New Observation
 
 Maintaining prefix prime-factor counts enables O(n) greedy reconstruction after a single right-to-left scan.
+
+
+## Pattern: Greedy Subsequence Construction with Suffix Feasibility
+
+### Recognition Signals
+
+Look for problems where:
+
+* You need to construct a subsequence from a string or array.
+* The answer must be **lexicographically smallest** or use the earliest possible indices.
+* You are allowed a limited number of deviations, such as:
+
+  * At most one mismatch.
+  * At most `K` mismatches.
+  * A limited number of substitutions.
+* A greedy choice may be valid only if the remaining target can still be completed.
+* The problem asks for indices rather than only the resulting string.
+
+### When to Use
+
+Use this pattern when:
+
+* You want the earliest possible index at every step.
+* Selecting an element now can affect whether the remaining target is achievable.
+* The remaining portion can be checked efficiently using precomputed suffix information.
+* A small amount of state, such as `used_mismatch`, represents the special operation already consumed.
+
+### Key Insight
+
+For a lexicographically smallest index sequence, always prefer the earliest possible index.
+
+However, an early choice is safe only if it does not make the remainder impossible.
+
+Separate choices into two cases:
+
+1. **Exact match**
+
+   If the current character matches the next required target character, take it immediately.
+
+2. **Allowed mismatch**
+
+   If it does not match, use the mismatch only when the remaining suffix can still match the remaining target exactly.
+
+This leads to the general strategy:
+
+```text
+Choose the earliest feasible index.
+```
+
+The important word is **feasible**.
+
+A suffix preprocessing pass allows feasibility to be checked in O(1) during the greedy scan.
+
+### Reusable Template
+
+1. Precompute information about how much of the target can be matched by every suffix of the source.
+2. Scan the source from left to right.
+3. Maintain the current position in the target.
+4. If the current element matches:
+
+   * Select it.
+   * Advance the target position.
+5. Otherwise:
+
+   * Check whether the limited special operation is still available.
+   * Check whether selecting the current element leaves a feasible suffix.
+   * If both conditions hold, select it and consume the special operation.
+6. Continue until the target is completely constructed or the source is exhausted.
+7. Return the constructed sequence if the target was completed.
+
+### Common Variations
+
+#### At most one mismatch
+
+One special operation can be used during the greedy construction.
+
+#### At most K mismatches
+
+Maintain a mismatch count instead of a boolean state.
+
+#### Different substitution costs
+
+The feasibility condition may track the remaining available cost rather than simply whether a mismatch is available.
+
+#### Lexicographically smallest subsequence
+
+The special operation may not be present; suffix feasibility is still useful when an early greedy choice can make completion impossible.
+
+### Related Patterns
+
+#### Greedy Subsequence Matching
+
+Choose the earliest possible matching elements.
+
+**Difference:** Basic subsequence matching does not normally need a feasibility check because every selected element must match exactly.
+
+#### Greedy + Feasibility Check
+
+Make the locally optimal choice only when the remaining problem remains solvable.
+
+**Difference:** The feasibility information may come from suffix preprocessing, dynamic programming, or another data structure.
+
+#### Prefix/Suffix Preprocessing
+
+Precompute information from one direction and use it while making decisions in the opposite direction.
+
+**Difference:** Prefix/suffix preprocessing is a technique; this pattern combines it specifically with greedy subsequence construction.
+
+#### Lexicographically Smallest Construction
+
+Repeatedly choose the smallest/earliest option that can lead to a valid complete answer.
+
+### Problems Using This Pattern
+
+| Problem                                                  | Variation                                              |
+| -------------------------------------------------------- | ------------------------------------------------------ |
+| 3302. Find the Lexicographically Smallest Valid Sequence | At most one character mismatch with suffix feasibility |
+| 524. Longest Word in Dictionary Through Deleting         | Greedy subsequence matching                            |
+| 392. Is Subsequence                                      | Basic subsequence feasibility                          |
+| 1673. Find the Most Competitive Subsequence              | Lexicographically smallest subsequence                 |
+| 316. Remove Duplicate Letters                            | Lexicographically smallest valid reconstruction        |
+
+### Interview Tips
+
+* When asked for the **lexicographically smallest sequence of indices**, think **earliest feasible choice**, not merely earliest choice.
+* Ask: **"If I take this element now, can I still finish the target?"**
+* If that question must be answered repeatedly, look for prefix/suffix preprocessing.
+* Separate **optimization** from **feasibility**:
+
+  * Greedy determines which choice is best.
+  * Suffix information determines whether that choice is safe.
+* A common mistake is to spend the allowed mismatch at the first mismatch without checking whether the remaining target can still be matched.
+* When a problem allows only a small number of exceptional operations, explicitly track whether those operations have already been consumed.
