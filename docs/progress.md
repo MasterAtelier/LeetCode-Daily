@@ -4,3 +4,4 @@
 | 3731 | Find Missing Elements | Easy | Hash Set / Membership Testing | Yes | No | No |
 | 3345 | Smallest Divisible Digit Product I | Easy | Brute Force | Yes | No | No |
 | 3302 |  Find the Lexicographically Smallest Valid Sequence | Medium | Greedy Suffix | No | Yes | No |
+| 1140 | Stone Game II | Medium | Game DP + Minimax + Suffix Sum | Yes | No | No |

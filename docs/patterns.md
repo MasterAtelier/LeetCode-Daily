@@ -361,3 +361,78 @@ Repeatedly choose the smallest/earliest option that can lead to a valid complete
   * Suffix information determines whether that choice is safe.
 * A common mistake is to spend the allowed mismatch at the first mismatch without checking whether the remaining target can still be matched.
 * When a problem allows only a small number of exceptional operations, explicitly track whether those operations have already been consumed.
+
+
+## Variation: Game DP with a Dynamic Move-Bound State
+
+### Recognition Signals
+
+A two-player game where:
+
+* Players alternate optimally.
+* The remaining input is a suffix or smaller state.
+* The number of elements that can be taken depends on a variable from the previous move.
+* That variable changes after every move.
+
+Typical signal:
+
+> "You may take between 1 and `K` elements, and `K` changes based on how many you took."
+
+### Key Observation
+
+The move-bound variable is part of the DP state.
+
+For Stone Game II:
+
+`state = (position, M)`
+
+where `M` determines the legal range:
+
+`1 <= X <= 2M`
+
+After taking `X`:
+
+`M = max(M, X)`
+
+### Reusable Template
+
+1. Identify the smallest state describing the remaining game.
+2. Include every variable that affects future legal moves.
+3. Enumerate every legal move.
+4. Transition to the opponent's state.
+5. Express the current player's result using the opponent's optimal result.
+6. Memoize the state.
+
+For additive rewards:
+
+`current_result = total_remaining - opponent_result`
+
+### Important Distinction
+
+This is different from ordinary interval game DP.
+
+In interval DP, the state is often:
+
+`(left, right)`
+
+In Stone Game II, the state is:
+
+`(position, move_bound)`
+
+The second dimension is not a boundary of the input. It is a **dynamic game parameter** created by previous decisions.
+
+### Problems Using Related Ideas
+
+* 1140. Stone Game II
+* 1406. Stone Game III
+* 1510. Stone Game IV
+* 486. Predict the Winner
+* 1690. Stone Game VII
+
+### Interview Insight
+
+When a game says that the number of choices available on the next turn depends on the current move, immediately ask:
+
+> **What variable controls my next legal moves, and does it need to become part of my DP state?**
+
+That question often reveals the correct state definition before any recurrence is written.
