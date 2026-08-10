@@ -436,3 +436,77 @@ When a game says that the number of choices available on the next turn depends o
 > **What variable controls my next legal moves, and does it need to become part of my DP state?**
 
 That question often reveals the correct state definition before any recurrence is written.
+
+## Pattern: Win-Lose Dynamic Programming for Two-Player Games
+
+### Recognition Signals
+
+Look for problems where:
+
+- Two players alternate turns.
+- Both players play optimally.
+- A state has a finite set of legal moves.
+- Every move transitions to a smaller or already-solvable state.
+- The question asks whether the current player can force a win.
+- A player loses when no legal move is available.
+
+Typical language:
+- "return true if the first player wins"
+- "both players play optimally"
+- "the player unable to make a move loses"
+- "can the current player force a win?"
+
+### When to Use
+
+Use this pattern when the game can be represented by a manageable state and each move transitions to another state whose outcome can be computed.
+
+For a state `S`:
+
+- `S` is **winning** if there exists a legal move to a losing state.
+- `S` is **losing** if every legal move leads to a winning state.
+
+For Stone Game IV, the state is simply the number of remaining stones.
+
+### Reusable Template
+
+1. Identify the complete game state.
+2. Identify terminal states.
+3. Mark terminal losing/winning states.
+4. Enumerate legal moves from each state.
+5. Mark a state winning if at least one move reaches a losing state.
+6. Otherwise mark it losing.
+7. Build states in an order where all successor states are already known.
+
+### Common Variations
+
+- **1D state:** remaining stones, score, position, or amount.
+- **Multi-dimensional state:** position plus a changing move limit.
+- **Score-based game DP:** store the best score difference instead of a Boolean.
+- **Interval game DP:** state is a contiguous interval.
+- **Bitmask game DP:** state represents which choices/items have already been used.
+- **Memoized minimax:** compute only states reached by recursive play.
+
+### Related Patterns
+
+- **Minimax DP:** useful when the objective is an actual score/value rather than only win/lose.
+- **Interval DP:** use when the remaining game state is a subarray or interval.
+- **Bitmask DP:** use when the state depends on a subset of used choices.
+- **Mathematical game theory:** use when the winning/losing states have a direct mathematical characterization, eliminating the need for DP.
+
+### Problems Using This Pattern
+
+- Stone Game IV
+- Nim Game
+- Divisor Game
+- Can I Win
+- Stone Game III
+- Stone Game II
+- Predict the Winner
+
+### New Observation from Stone Game IV
+
+The most reusable mental model is:
+
+> **Winning = there exists a move to losing.**
+
+This is often easier to reason about than directly trying to describe how a player wins. Start with the state where no move is possible, label it losing, and propagate the labels backward.
