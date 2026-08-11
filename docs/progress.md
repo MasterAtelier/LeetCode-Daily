@@ -5,3 +5,4 @@
 | 3345 | Smallest Divisible Digit Product I | Easy | Brute Force | Yes | No | No |
 | 3302 |  Find the Lexicographically Smallest Valid Sequence | Medium | Greedy Suffix | No | Yes | No |
 | 1140 | Stone Game II | Medium | Game DP + Minimax + Suffix Sum | Yes | No | No |
+| 2996 | Smallest Missing Integer Greater Than Sequential | Prefix Sum | Yes | No | No |
