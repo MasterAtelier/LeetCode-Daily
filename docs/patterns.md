@@ -510,3 +510,67 @@ The most reusable mental model is:
 > **Winning = there exists a move to losing.**
 
 This is often easier to reason about than directly trying to describe how a player wins. Start with the state where no move is possible, label it losing, and propagate the labels backward.
+
+
+## Pattern: Variable-Size Sliding Window with Frequency Constraint
+
+### Recognition Signals
+
+Look for problems containing phrases such as:
+
+- "Longest subarray"
+- "Longest substring"
+- "At most K"
+- "At most K occurrences"
+- "Each element appears at most K times"
+- A contiguous range with a constraint that can be maintained incrementally
+
+### When to Use
+
+Use this pattern when:
+
+- The problem operates on a contiguous subarray or substring.
+- The goal is to maximize or minimize the window length.
+- The validity of a window can be maintained using incremental state.
+- Moving the left boundary forward can restore validity after the right boundary makes the window invalid.
+- Both pointers can move monotonically from left to right.
+
+### Reusable Template
+
+1. Initialize `left` at the beginning of the sequence.
+2. Initialize the state needed to determine whether the current window is valid.
+3. Expand the window by moving `right`.
+4. Update the state with the new element.
+5. While the window violates the constraint:
+   - Remove the element at `left` from the state.
+   - Move `left` forward.
+6. Record the best valid window.
+7. Continue until `right` reaches the end.
+
+### Common Variations
+
+- At most `K` occurrences of each value.
+- At most `K` distinct values.
+- At most `K` violations.
+- Longest window containing only unique values.
+- Minimum-size window satisfying a condition.
+- Frequency-map window.
+- Hash-set window.
+
+### Related Patterns
+
+- Frequency Counting (Hash Map)
+- Hash Set for Membership Testing
+- Fixed-Size Sliding Window
+- Prefix Sum + Hash Map
+- Two Pointers
+
+### Problems Using This Pattern
+
+- 2958. Length of Longest Subarray With at Most K Frequency
+- 3. Longest Substring Without Repeating Characters
+- 904. Fruit Into Baskets
+- 1004. Max Consecutive Ones III
+- 340. Longest Substring with At Most K Distinct Characters
+- 159. Longest Substring with At Most Two Distinct Characters
+- 424. Longest Repeating Character Replacement

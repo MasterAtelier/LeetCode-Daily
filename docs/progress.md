@@ -6,3 +6,4 @@
 | 3302 |  Find the Lexicographically Smallest Valid Sequence | Medium | Greedy Suffix | No | Yes | No |
 | 1140 | Stone Game II | Medium | Game DP + Minimax + Suffix Sum | Yes | No | No |
 | 2996 | Smallest Missing Integer Greater Than Sequential | Prefix Sum | Yes | No | No |
+| 2958 | Length of Longest Subarray With at Most K Frequency | Medium | Variable-Size Sliding Window + Frequency Map | Yes | No | No |
