@@ -574,3 +574,86 @@ Use this pattern when:
 - 340. Longest Substring with At Most K Distinct Characters
 - 159. Longest Substring with At Most Two Distinct Characters
 - 424. Longest Repeating Character Replacement
+
+## Pattern: Segment Tree with Boundary-Aware Custom Merge
+
+### Recognition Signals
+
+Look for problems with combinations such as:
+
+- "After each update, return..."
+- "Update index `i`..."
+- "Change this character/value..."
+- "Longest contiguous..."
+- "Maximum subarray/run/segment..."
+- Many **point updates** on a fixed array or string.
+- The answer can be represented as an aggregate of adjacent segments.
+- A valid answer may cross the boundary between two independently summarized segments.
+
+A particularly strong signal is:
+
+> **Point updates + repeated aggregate queries + a contiguous property whose answer can cross segment boundaries.**
+
+### When to Use
+
+Use this pattern when:
+
+- The underlying sequence length is fixed.
+- Updates modify individual positions.
+- Queries ask for a global or range aggregate after updates.
+- Recomputing the entire sequence after every update is too expensive.
+- Two neighboring segments can be combined using a fixed merge rule.
+- Each segment can be summarized with a small amount of information.
+
+### Reusable Template
+
+1. Define the smallest summary that completely describes what the parent needs from a segment.
+2. Identify the leaf representation for one element.
+3. Define a merge operation:
+   - Combine the left and right summaries.
+   - Handle values entirely inside either child.
+   - Explicitly handle answers crossing the boundary.
+4. Build the segment tree bottom-up or recursively.
+5. For a point update:
+   - Replace the corresponding leaf.
+   - Recompute summaries along the path to the root.
+6. Read the required aggregate from the root or perform a range query.
+
+### Common Variations
+
+- Range sum with point updates.
+- Range minimum/maximum with point updates.
+- Longest equal-character run after point updates.
+- Maximum subarray sum with point updates.
+- Longest prefix/suffix satisfying a property.
+- Maintaining counts plus boundary information.
+- Range queries where the answer depends on adjacent elements.
+
+### Related Patterns
+
+- **Fenwick Tree:** Prefer when the aggregate is suitable for prefix/range operations such as sums and point updates.
+- **Standard Segment Tree:** Same tree structure, but the node summary is usually a simple scalar.
+- **Lazy Segment Tree:** Use when updates affect ranges rather than individual points.
+- **Divide and Conquer:** The merge concept is similar, but segment trees extend it to repeated dynamic updates.
+- **Monoid/Associative Merge:** The most general viewpoint: design a compact summary and an associative merge operation.
+
+### Important Variation: Boundary-Aware State
+
+For longest contiguous runs, storing only the best answer in each segment is insufficient.
+
+A segment should expose:
+
+- Its total length.
+- Longest valid prefix.
+- Longest valid suffix.
+- Longest valid run anywhere inside.
+- First boundary value.
+- Last boundary value.
+
+The parent can then detect whether the optimal run crosses the midpoint.
+
+### Problems Using This Pattern
+
+- **2213. Longest Substring of One Repeating Character** — Maintain longest equal-character run after point updates.
+- **53. Maximum Subarray** — A segment-tree formulation can maintain total sum, best prefix, best suffix, and best subarray sum.
+- **307. Range Sum Query - Mutable** — Simpler segment-tree merge using addition.
