@@ -568,12 +568,14 @@ Use this pattern when:
 ### Problems Using This Pattern
 
 - 2958. Length of Longest Subarray With at Most K Frequency
+- 3090. Maximum Length Substring With Two Occurrences
 - 3. Longest Substring Without Repeating Characters
 - 904. Fruit Into Baskets
 - 1004. Max Consecutive Ones III
 - 340. Longest Substring with At Most K Distinct Characters
 - 159. Longest Substring with At Most Two Distinct Characters
 - 424. Longest Repeating Character Replacement
+- Minimum Window Substring
 
 ## Pattern: Segment Tree with Boundary-Aware Custom Merge
 

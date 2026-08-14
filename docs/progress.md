@@ -7,4 +7,5 @@
 | 1140 | Stone Game II | Medium | Game DP + Minimax + Suffix Sum | Yes | No | No |
 | 2996 | Smallest Missing Integer Greater Than Sequential | Prefix Sum | Yes | No | No |
 | 2958 | Length of Longest Subarray With at Most K Frequency | Medium | Variable-Size Sliding Window + Frequency Map | Yes | No | No |
-| 2213 | Longest Substring of One Repeating Character   | Hard | Segment Tree with Boundary-Aware Custom Merge | No | Yes | No |
+| 2213 | Longest Substring of One Repeating Character   | Hard | Segment Tree with Boundary-Aware Custom Merge | No | Yes | No|
+| 3090 | Maximum Length Substring With Two Occurrences | Easy | Frequency-Constrained Sliding Window | Yes | No | No |
