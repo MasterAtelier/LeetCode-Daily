@@ -511,6 +511,151 @@ The most reusable mental model is:
 
 This is often easier to reason about than directly trying to describe how a player wins. Start with the state where no move is possible, label it losing, and propagate the labels backward.
 
+---
+
+## Pattern: XOR-Based Maximum-Length Selection
+
+### Recognition Signals
+
+Look for problems involving:
+
+- Longest subsequence with an XOR constraint
+- Maximum number of elements while satisfying a bitwise condition
+- Removing the minimum number of elements
+- XOR of the entire array
+- Conditions involving XOR being zero or non-zero
+
+Typical clues:
+
+- "Longest subsequence..."
+- "Non-zero XOR"
+- "Bitwise XOR"
+- "Remove elements..."
+- "Maximum length..."
+
+---
+
+## When to Use
+
+Use this pattern when:
+
+1. The objective is to maximize the number of retained elements.
+2. The constraint depends only on the XOR of selected elements.
+3. The XOR of the entire array can be computed directly.
+4. Removing a single element has a predictable effect on the XOR.
+
+---
+
+## Key XOR Identities
+
+### Cancellation
+
+    x ^ x = 0
+
+### Identity
+
+    x ^ 0 = x
+
+### Removing an Element
+
+If:
+
+    total_xor = XOR(all elements)
+
+then removing `x` gives:
+
+    remaining_xor = total_xor ^ x
+
+Therefore, if:
+
+    total_xor = 0
+
+then:
+
+    remaining_xor = x
+
+This is the key observation behind the problem.
+
+---
+
+## Reusable Template
+
+1. Compute the XOR of all elements.
+2. Check whether the complete array satisfies the condition.
+3. If it does, return the full length.
+4. If it does not, determine whether removing one element can satisfy the condition.
+5. Prove that the resulting length is achievable.
+6. Prove that no longer answer is possible.
+7. Handle the degenerate case where no valid subsequence exists.
+
+---
+
+## Common Variations
+
+### Full XOR is already valid
+
+Return the full array length.
+
+### Full XOR is invalid but one removal fixes it
+
+Return:
+
+    n - 1
+
+### No non-zero element exists
+
+Return `0`.
+
+### XOR target instead of non-zero
+
+The problem may require a more sophisticated XOR-state approach.
+
+---
+
+## Related Patterns
+
+### XOR Cancellation
+
+Useful when values appear repeatedly and pairs cancel.
+
+### Bitmask / Bit Manipulation
+
+Useful when the condition depends on individual bits.
+
+### Prefix XOR
+
+Useful when the problem involves XOR over subarrays.
+
+### XOR Linear Basis
+
+Useful when maximizing or representing XOR values across many choices.
+
+---
+
+## Problems Using Similar Ideas
+
+- Single Number
+- Missing Number
+- Maximum XOR of Subsequences
+- Maximum XOR for Each Query
+- XOR Queries of a Subarray
+- Single Number II
+- Single Number III
+
+---
+
+## Interview Recognition Rule
+
+When you see:
+
+> "Maximum/longest subsequence with a bitwise XOR condition"
+
+ask immediately:
+
+> "What is the XOR of the entire array, and what happens if I remove exactly one element?"
+
+This question can turn an exponential subsequence problem into a linear scan.
+
 
 ## Pattern: Variable-Size Sliding Window with Frequency Constraint
 
