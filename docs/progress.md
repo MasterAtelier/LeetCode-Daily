@@ -10,3 +10,4 @@
 | 2213 | Longest Substring of One Repeating Character   | Hard | Segment Tree with Boundary-Aware Custom Merge | No | Yes | No|
 | 3090 | Maximum Length Substring With Two Occurrences | Easy | Frequency-Constrained Sliding Window | Yes | No | No |
 | 3702 | Longest Subsequence With Non-Zero Bitwise XOR | Medium | XOR-Based Maximum-Length Selection | Yes | No | No |
+| 2029 | Stone Game IX | Medium | XOR-Based Maximum-Length Selection | Yes | No | No |

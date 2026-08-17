@@ -804,3 +804,107 @@ The parent can then detect whether the optimal run crosses the midpoint.
 - **2213. Longest Substring of One Repeating Character** — Maintain longest equal-character run after point updates.
 - **53. Maximum Subarray** — A segment-tree formulation can maintain total sum, best prefix, best suffix, and best subarray sum.
 - **307. Range Sum Query - Mutable** — Simpler segment-tree merge using addition.
+
+## Pattern: Game Theory + Modular Arithmetic + State Compression
+
+### Recognition Signals
+
+Look for phrases or conditions involving:
+
+- "sum is divisible by..."
+- "remainder"
+- "modulo"
+- Two players making alternating moves
+- Losing or winning based on a cumulative value
+- Many values that behave identically under a modulus
+- A game where the exact values appear much more detailed than the actual win condition requires
+
+A strong signal is:
+
+> The outcome depends only on a value modulo a small integer.
+
+### When to Use
+
+Use this pattern when:
+
+1. The game state depends on a cumulative sum or difference.
+2. Only the remainder of that quantity matters.
+3. Different input values with the same remainder are strategically equivalent.
+4. The number of possible residues is small enough to reason about directly.
+
+For Stone Game IX, there are only three relevant states: `0`, `1`, and `2` modulo 3.
+
+### Reusable Template
+
+1. Identify the mathematical property that determines the game outcome.
+2. Determine the smallest state needed to represent that property.
+3. Map each input value into that state.
+4. Count or otherwise compress equivalent states.
+5. Analyze the game on the compressed state space.
+6. Derive the winning condition from optimal play.
+7. Validate the condition against brute force for small inputs.
+8. Implement the final condition using the compressed representation.
+
+### Common Variations
+
+#### Different modulus
+
+The same idea may apply when the game depends on modulo `k` instead of modulo 3.
+
+#### State-frequency counting
+
+If elements with the same state are interchangeable, replace the original sequence with frequencies.
+
+#### Game + invariant
+
+Sometimes a mathematical invariant determines the winner without requiring explicit simulation.
+
+#### Game + DP
+
+If the compressed state is still too large for a direct mathematical characterization, use memoization or dynamic programming over the compressed state.
+
+### Related Patterns
+
+#### Minimax / Game DP
+
+Use when both players optimize their outcome and the future depends on previous choices.
+
+**Distinguish it from this problem:** Stone Game IX can be reduced far enough that explicit minimax is unnecessary.
+
+#### Bitmask DP
+
+Use when the identity of remaining elements matters and `n` is small.
+
+**Distinguish it from this problem:** Here, individual identities do not matter; only residue counts matter.
+
+#### Greedy
+
+Use when a locally optimal move can be proven to preserve global optimality.
+
+**Distinguish it from this problem:** The final solution is not a generic greedy simulation; it is a mathematical characterization of the game.
+
+#### Invariant-based reasoning
+
+Use when the game outcome is controlled by a quantity that remains constrained under every move.
+
+**Distinguish it from this problem:** The modulo-3 state is the central invariant.
+
+### Problems Using This Pattern
+
+- **Stone Game IX** — reduce values to residues modulo 3 and reason about residue counts.
+- **Nim** — reduce a game to a mathematical invariant.
+- **Divisor Game** — game outcome collapses to a mathematical property.
+- **Can I Win** — game-state compression with memoization, although the state representation is fundamentally different.
+- **Stone Game III** — game theory plus DP rather than a direct modular characterization.
+
+### One-Minute Recognition Rule
+
+When a game says:
+
+> "Players take numbers, and something happens when the running sum reaches a divisibility/modulo condition."
+
+immediately ask:
+
+> **Can I replace every number by its remainder and count equivalent residues?**
+
+That question can turn an exponential game simulation into an O(n) counting solution.
