@@ -11,3 +11,5 @@
 | 3090 | Maximum Length Substring With Two Occurrences | Easy | Frequency-Constrained Sliding Window | Yes | No | No |
 | 3702 | Longest Subsequence With Non-Zero Bitwise XOR | Medium | XOR-Based Maximum-Length Selection | Yes | No | No |
 | 2029 | Stone Game IX | Medium | XOR-Based Maximum-Length Selection | Yes | No | No |
+| 1563 |  Stone Game V | Hard | Game Theory + Modular Arithmetic + State Compression | Yes | No | No | 
+| 1386 | Cinema Seat Allocation | Medium | Local State Compression + Greedy Selection | Yes | No | No |

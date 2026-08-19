@@ -908,3 +908,148 @@ immediately ask:
 > **Can I replace every number by its remainder and count equivalent residues?**
 
 That question can turn an exponential game simulation into an O(n) counting solution.
+
+---
+
+# Pattern: Interval DP with a Monotonic Partition Boundary
+
+## Recognition Signals
+Look for:
+
+- "split the array"
+- "partition the interval"
+- "left sum / right sum"
+- "choose the smaller side"
+- "maximize the score after splitting"
+- A contiguous interval with a split point.
+- A naive `O(n^3)` interval DP.
+- A partition condition whose boundary moves monotonically.
+
+## When to Use
+Use this optimization when:
+
+1. The problem is naturally interval DP.
+2. The transition depends on a boundary condition.
+3. The boundary can be proven monotonic as one endpoint changes.
+4. Array properties, such as positive values, guarantee the monotonicity.
+
+Always prove the monotonicity before replacing binary search with a moving pointer.
+
+## Reusable Template
+
+1. Define the interval DP state.
+2. Express the transition using a split boundary.
+3. Build prefix sums.
+4. Identify the largest/smallest split satisfying the condition.
+5. Prove that this boundary moves in one direction.
+6. Reuse the previous boundary with a pointer.
+7. Advance the pointer only when the next position remains valid.
+8. Precompute prefix/suffix aggregates for transition regions.
+9. Update the DP state in constant time.
+
+## Common Variations
+
+- Binary-search boundary -> monotonic pointer.
+- Prefix maximum -> suffix maximum.
+- Two-sided partition conditions.
+- Equality requiring both transitions.
+- Monotonic queue/deque for sliding-window aggregates.
+- Divide-and-conquer DP optimization when the optimal split is monotonic.
+- Knuth optimization when its required interval conditions hold.
+
+## Related Patterns
+
+### Standard Interval DP
+Try every split explicitly.
+
+- Usually `O(n^3)`.
+- Easy to derive.
+- Excellent as a brute-force correctness oracle.
+
+### Interval DP + Binary Search
+Use when the split condition is monotonic but a pointer cannot conveniently be reused.
+
+- Often `O(n^2 log n)`.
+
+### Monotonic Pointer Optimization
+Use when neighboring states have boundaries that only move forward or backward.
+
+- Can reduce `O(n^2 log n)` to `O(n^2)`.
+
+### Divide-and-Conquer DP Optimization
+Uses monotonicity of the optimal split itself. Its proof and recurrence requirements differ from this problem.
+
+## Problems Using This Pattern
+
+- **Stone Game V (LeetCode 1563)** — partition by comparing left and right sums; the boundary is monotonic for fixed `i`.
+- **Stone Game VII** — interval DP with prefix sums, but a different transition.
+- **Burst Balloons** — interval DP over split points, useful for contrasting standard split enumeration.
+- **Minimum Cost to Cut a Stick** — interval DP over partition points.
+
+## Pattern: Local State Compression + Greedy Selection
+
+## Recognition Signals
+
+Look for problems where:
+
+- The input is divided into independent components such as rows, intervals, or groups.
+- Most of the input has a predictable default contribution.
+- Only a small subset of positions affects the answer.
+- There are only a few valid configurations per component.
+- Candidate configurations overlap, requiring a compatibility decision.
+
+Typical phrases include:
+
+- "maximum number of groups"
+- "reserved positions"
+- "place as many as possible"
+- "non-overlapping"
+- "available positions"
+- "each row independently"
+
+## When to Use
+
+Use this pattern when each component can be solved independently and the component has a small finite state space.
+
+The key steps are:
+
+1. Identify the independent components.
+2. Determine the default contribution of an unconstrained component.
+3. Compress constrained components to only the information that matters.
+4. Enumerate the small set of valid local configurations.
+5. Resolve overlaps with a greedy or constant-size compatibility rule.
+
+## Reusable Template
+
+1. Partition the input into independent units.
+2. Compute the contribution from units with no constraints.
+3. For each constrained unit:
+   - Keep only relevant state.
+   - Define the candidate configurations.
+   - Determine which candidates are available.
+   - Select a maximum compatible subset.
+4. Add all local contributions.
+
+## Common Variations
+
+- **Bitmask state:** Encode a small number of positions as bits.
+- **Set state:** Store occupied positions and test candidate groups.
+- **Interval compatibility:** Select non-overlapping intervals greedily.
+- **Small DP state:** Use DP when local configurations cannot be resolved by a simple greedy rule.
+- **Precomputed patterns:** Map each small state to its optimal answer.
+
+## Related Patterns
+
+- **Greedy:** Use when a locally optimal compatible choice can be proven to preserve global optimality.
+- **Bitmasking:** Useful when the number of relevant binary positions is small.
+- **Hash Map / Grouping:** Useful for processing only constrained components.
+- **Interval Scheduling:** Similar when candidate configurations overlap and must be selected compatibly.
+- **Dynamic Programming:** Prefer this when local choices have interactions that greedy selection cannot resolve.
+
+## Problems Using This Pattern
+
+- **LeetCode 1386 — Cinema Seat Allocation:** Three possible family blocks per occupied row.
+- **LeetCode 605 — Can Place Flowers:** Local placement with spacing constraints.
+- **LeetCode 435 — Non-overlapping Intervals:** Select compatible intervals greedily.
+- **LeetCode 452 — Minimum Number of Arrows to Burst Balloons:** Overlapping intervals and greedy compatibility.
+- **LeetCode 1893 — Check if All the Integers in a Range Are Covered:** Fixed-range coverage and compact state reasoning.
