@@ -13,3 +13,4 @@
 | 2029 | Stone Game IX | Medium | XOR-Based Maximum-Length Selection | Yes | No | No |
 | 1563 |  Stone Game V | Hard | Game Theory + Modular Arithmetic + State Compression | Yes | No | No | 
 | 1386 | Cinema Seat Allocation | Medium | Local State Compression + Greedy Selection | Yes | No | No |
+| 3069  | Distribute Elements Into Two Arrays I | Yes | No | No |
