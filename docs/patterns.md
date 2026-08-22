@@ -1053,3 +1053,73 @@ The key steps are:
 - **LeetCode 435 — Non-overlapping Intervals:** Select compatible intervals greedily.
 - **LeetCode 452 — Minimum Number of Arrows to Burst Balloons:** Overlapping intervals and greedy compatibility.
 - **LeetCode 1893 — Check if All the Integers in a Range Are Covered:** Fixed-range coverage and compact state reasoning.
+
+## Pattern: Digit Manipulation
+
+### Recognition Signals
+
+Common phrases include:
+
+- "sum of digits"
+- "product of digits"
+- "reverse the number"
+- "extract each digit"
+- "process every digit"
+- "number contains..."
+- "digit-wise"
+
+### When to Use
+
+Use digit manipulation when the required result depends on individual decimal digits of an integer.
+
+The standard arithmetic technique is:
+
+1. Extract the last digit using `% 10`.
+2. Process the digit.
+3. Remove the last digit using `// 10`.
+4. Repeat until the number becomes zero.
+
+### Reusable Template
+
+Given an integer `n`:
+
+1. Preserve `n` if the original value is needed later.
+2. Initialize the required accumulators.
+3. While `n` is non-zero:
+   - Extract the last digit.
+   - Update the required accumulator(s).
+   - Remove the last digit.
+4. Use the accumulated values to produce the final result.
+
+### Common Variations
+
+- Digit sum
+- Digit product
+- Digit frequency
+- Number reversal
+- Palindrome checking
+- Digit counting
+- Constructing a new number from digits
+- Applying a mathematical property to each digit
+
+### Related Patterns
+
+Digit manipulation is closely related to string-based processing.
+
+Use arithmetic digit processing when:
+- Only individual digits are needed.
+- O(1) auxiliary space is desirable.
+- The input is already an integer.
+
+Use string processing when:
+- Character-level operations are required.
+- The problem naturally involves string properties.
+- Simpler implementation outweighs the additional O(d) space.
+
+### Problems Using This Pattern
+
+- Check Divisibility by Digit Sum and Product
+- Add Digits
+- Palindrome Number
+- Reverse Integer
+- Happy Number
