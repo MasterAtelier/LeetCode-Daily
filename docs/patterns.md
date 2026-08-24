@@ -1123,3 +1123,61 @@ Use string processing when:
 - Palindrome Number
 - Reverse Integer
 - Happy Number
+
+## Pattern: Mathematical Game-State Reduction
+
+### Recognition Signals
+
+Look for problems where:
+
+- Two players alternate making choices.
+- The final result depends on aggregate quantities such as sums or counts.
+- The choices are symmetric or have a fixed maximum/minimum contribution.
+- Simulating every move creates a large branching factor.
+- Turn parity appears important.
+- The objective is to force equality or inequality between two quantities.
+
+### When to Use
+
+Use this pattern when the exact sequence of moves does not matter to the final outcome and the game can be characterized by a small mathematical state.
+
+Typical questions to ask:
+
+1. What aggregate state completely describes the remaining game?
+2. Does turn parity determine who gets the final decisive move?
+3. What is the maximum/minimum contribution of one move?
+4. Can the opponent always respond symmetrically?
+5. Is there a single equality condition describing the losing positions?
+
+### Reusable Template
+
+1. Partition the problem into the relevant competing groups.
+2. Compute the fixed contribution of each group.
+3. Count the flexible/unknown moves available to each group.
+4. Analyze turn parity.
+5. Derive the maximum compensation the remaining moves can create.
+6. Characterize the exact losing state.
+7. Return the opposite condition as the winning condition.
+
+### Common Variations
+
+- Parity-based game outcomes.
+- Sum-difference games.
+- Modular game invariants.
+- Pairing strategies.
+- Greedy opponent-response arguments.
+- Minimax problems that collapse into a mathematical condition.
+
+### Related Patterns
+
+- **Minimax / Game DP:** Use when the complete game state matters and no simple invariant exists.
+- **Greedy pairing:** Use when one player's move can be neutralized by a predictable response.
+- **Parity reasoning:** Use when the number of moves or positions determines who gets control.
+- **Modular arithmetic:** Use when only a remainder or residue class affects the game.
+
+### Problems Using This Pattern
+
+- Sum Game
+- Nim Game
+- Divisor Game
+- Stone Game IX

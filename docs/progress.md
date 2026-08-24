@@ -15,3 +15,4 @@
 | 1386 | Cinema Seat Allocation | Medium | Local State Compression + Greedy Selection | Yes | No | No |
 | 3069  | Distribute Elements Into Two Arrays I | Yes | No | No |
 | 3622 | Check Divisibility by Digit Sum and Product | Yes | No | No |
+| 1927 | Sum Game | Yes | No | No |
