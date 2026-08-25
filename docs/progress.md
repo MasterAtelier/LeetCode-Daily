@@ -13,6 +13,9 @@
 | 2029 | Stone Game IX | Medium | XOR-Based Maximum-Length Selection | Yes | No | No |
 | 1563 |  Stone Game V | Hard | Game Theory + Modular Arithmetic + State Compression | Yes | No | No | 
 | 1386 | Cinema Seat Allocation | Medium | Local State Compression + Greedy Selection | Yes | No | No |
-| 3069  | Distribute Elements Into Two Arrays I | Yes | No | No |
-| 3622 | Check Divisibility by Digit Sum and Product | Yes | No | No |
-| 1927 | Sum Game | Yes | No | No |
+| 3069  | Distribute Elements Into Two Arrays I | Easy | Implementation |Yes | No | No |
+| 3116  | Kth Smallest Amount With Single Denomination Combination | Hard | Binary Search on Answer + Inclusion-Exclusion |Yes | No | No |
+| 3622 | Check Divisibility by Digit Sum and Product | Easy | Math |Yes | No | No |
+| 1872 | Stone Game VIII | Hard | DP + Minimax + PrefixSum + Game Theory + Zero- sum Game |Yes | No | No | Yes | No | No |
+| 1927 | Sum Game | Medium | Greedy + Game Theory |Yes | No | No | Yes | No | No |
+| 3718 | Smallest Missing Multiple of K | Easy | Hash Set + Enumeration | Yes | No | No |

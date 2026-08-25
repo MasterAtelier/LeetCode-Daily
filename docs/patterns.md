@@ -979,6 +979,126 @@ Use when neighboring states have boundaries that only move forward or backward.
 ### Divide-and-Conquer DP Optimization
 Uses monotonicity of the optimal split itself. Its proof and recurrence requirements differ from this problem.
 
+---
+
+# Pattern Addition — Prefix Sum + Minimax DP
+
+## Pattern
+**Prefix Sum + One-Dimensional Minimax Dynamic Programming**
+
+## Recognition Signals
+Consider this pattern when a problem contains several of these signals:
+
+- Two players alternate turns.
+- Both players play optimally.
+- The objective is to maximize/minimize a score difference.
+- A move consumes a contiguous prefix.
+- The consumed elements are replaced by their aggregate, such as their sum.
+- The next state can be described using a cumulative value rather than the full original prefix.
+
+Typical conceptual signals include:
+
+- "Choose the first `k` elements."
+- "Take at least two elements from the left."
+- "Replace them with their sum."
+- "Alice maximizes and Bob minimizes."
+- "Return Alice's score minus Bob's score."
+
+## When to Use
+Use this pattern when the operation makes the consumed prefix irrelevant except for an aggregate such as its sum.
+
+The crucial question is:
+
+> After a move, what information from the consumed prefix is still relevant?
+
+If the answer is "only its sum," a prefix-sum representation may collapse the game state dramatically.
+
+For score-difference games, define the state from the current player's perspective. A move producing immediate score `gain` followed by an opponent state with value `opponent_best` has:
+
+`candidate = gain - opponent_best`
+
+Then choose the maximum candidate for the current player.
+
+## Reusable Template
+
+1. Identify the cumulative value associated with every legal prefix.
+2. Express the result of choosing a prefix as:
+   `prefix_value - result_of_opponent_state`.
+3. Identify the terminal move/state.
+4. Initialize the DP from the terminal or full-prefix state.
+5. Iterate through candidate states in dependency order, often right-to-left.
+6. Compress the DP to one scalar if only the previous state is needed.
+
+## Common Variations
+
+### Explicit DP array
+Store the optimal result for every prefix state.
+
+**Advantage:** Easier to explain and debug.
+
+**Disadvantage:** Uses `O(n)` extra space.
+
+### Rolling/scalar DP
+If the recurrence only needs the current best state, retain one scalar.
+
+**Advantage:** `O(1)` extra space.
+
+**Disadvantage:** The state meaning must be clearly understood to avoid incorrect updates.
+
+### Different aggregation functions
+The same structural idea may apply when a consumed prefix is replaced by another associative aggregate, although the exact recurrence changes.
+
+Examples include:
+
+- sum
+- minimum/maximum
+- bitwise aggregate
+
+The key requirement is that the aggregate completely captures the information needed for future decisions.
+
+## Related Patterns
+
+### Prefix Sum
+Prefix sums encode cumulative information:
+
+`prefix[i] = values[0] + ... + values[i]`
+
+Here, prefix sums are not merely used for range queries; they become the values of game transitions.
+
+### Minimax DP
+For two-player zero-sum games:
+
+`current_result = current_gain - opponent_result`
+
+This converts alternating turns into a single optimization recurrence.
+
+### State Compression
+Instead of representing the entire game board/state, identify the smallest information that determines all future possibilities.
+
+### Reverse DP
+When a state depends on a later state, process states in reverse dependency order.
+
+## Problems Using This Pattern or Closely Related Ideas
+
+- **1872. Stone Game VIII** - direct example of prefix-sum minimax DP.
+- **1406. Stone Game III** - score-difference minimax DP over prefixes, but the number of stones taken is bounded.
+- **1140. Stone Game II** - game-state compression is useful, but an additional parameter is required.
+- **877. Stone Game** - minimax game DP, but the state is an interval and moves occur at either end.
+- **1686. Stone Game VI** - score-difference game theory with a different transition structure.
+- **1000. Merge Stones** - prefix sums plus DP, but no adversarial opponent.
+
+## Interview Heuristic
+When you see a game problem, ask these questions in order:
+
+1. Is the game zero-sum or can I express the objective as a score difference?
+2. What exactly changes after one move?
+3. Can the resulting state be represented compactly?
+4. Does a prefix/suffix aggregate capture everything the future needs?
+5. Can I write `my_gain - opponent_best`?
+6. What is the terminal state?
+7. Can the DP be computed in reverse?
+8. Can the DP array be compressed to a scalar?
+
 ## Problems Using This Pattern
 
 - **Stone Game V (LeetCode 1563)** — partition by comparing left and right sums; the boundary is monotonic for fixed `i`.
@@ -1181,3 +1301,184 @@ Typical questions to ask:
 - Nim Game
 - Divisor Game
 - Stone Game IX
+
+## Binary Search on Answer + Inclusion-Exclusion
+
+### Recognition Signals
+
+Look for problems containing combinations of:
+
+- "kth smallest"
+- "kth amount"
+- "at least k"
+- "how many values are <= x"
+- "divisible by at least one"
+- Multiple denominations or divisors
+- A small number of denominations
+- Very large `k`
+
+A particularly strong signal is:
+
+> Find the kth smallest positive integer satisfying a union of divisibility conditions.
+
+### When to Use
+
+Use this pattern when:
+
+1. The answer lies in a numeric range.
+2. You can define `count(x)` = number of valid values `<= x`.
+3. `count(x)` is monotonic.
+4. The required count involves overlapping sets.
+5. The number of sets is small enough to enumerate subsets.
+
+### Reusable Template
+
+1. Define a candidate answer `x`.
+2. Determine how many valid values are `<= x`.
+3. If the valid sets overlap, identify their intersections.
+4. Use inclusion-exclusion to calculate the union count.
+5. Represent divisibility intersections using LCM.
+6. Define the monotonic predicate:
+
+    `count(x) >= k`
+
+7. Binary-search for the first `x` satisfying the predicate.
+
+### Common Variations
+
+- Two divisors:
+   - Add multiples of each.
+   - Subtract multiples of their LCM.
+
+- Multiple divisors:
+   - Enumerate all subsets.
+   - Alternate addition/subtraction according to subset size.
+
+- Feasibility instead of counting:
+   - Replace `count(x)` with a boolean feasibility check.
+
+- Optimization problems:
+   - Search for the smallest/largest value for which a monotonic condition becomes true.
+
+### Related Patterns
+
+#### Binary Search on Answer
+
+Used when a numerical answer has a monotonic feasibility/counting property.
+
+Difference:
+
+- Binary search on answer does not necessarily involve inclusion-exclusion.
+- Inclusion-exclusion is specifically useful when counting a union of overlapping sets.
+
+#### Inclusion-Exclusion
+
+Used when multiple sets overlap and we need the size of their union.
+
+Difference:
+
+- Inclusion-exclusion alone does not imply binary search.
+- Binary search becomes useful when the union count can be evaluated for an arbitrary candidate value.
+
+#### LCM-Based Counting
+
+For divisibility problems, the intersection of:
+
+- multiples of `a`
+- multiples of `b`
+
+is the set of multiples of `LCM(a, b)`.
+
+This connects number theory directly to inclusion-exclusion.
+
+### Problems Using This Pattern
+
+- **3116 - Kth Smallest Amount With Single Denomination Combination**
+- **878 - Nth Magical Number**
+- **1201 - Ugly Number III**
+
+These problems share the core idea:
+
+> Count how many numbers satisfy a divisibility condition up to `x`, then binary-search the smallest `x` producing the required count.
+
+### Key Recognition Rule
+
+When you see:
+
+> "Find the kth smallest number that is divisible by at least one of these values"
+
+immediately consider:
+
+**Binary Search on Answer -> Inclusion-Exclusion -> LCM**
+
+## Hash Set + Ordered Candidate Enumeration
+
+### Recognition Signals
+
+Look for problems containing ideas such as:
+
+- "smallest missing"
+- "first missing"
+- "first value not present"
+- repeated existence checks
+- candidates generated from a predictable sequence
+- candidates that can be checked in increasing order
+
+### When to Use
+
+Use this pattern when:
+
+1. There is a clearly defined candidate sequence.
+2. Candidates can be generated in the required order.
+3. You repeatedly need to determine whether candidates exist.
+4. The first candidate satisfying a condition is the answer.
+
+The hash set handles fast membership queries while ordered enumeration
+guarantees that the first valid candidate is optimal.
+
+### Reusable Template
+
+1. Insert all relevant input values into a hash set.
+2. Determine the smallest possible candidate.
+3. Generate candidates in increasing order.
+4. Check each candidate against the hash set.
+5. Skip candidates that already exist.
+6. Return the first candidate that does not exist.
+
+### Common Variations
+
+- Smallest missing integer
+- Smallest missing value from an arithmetic sequence
+- First unused identifier
+- Missing values from a constrained sequence
+- Consecutive sequence detection
+
+### Related Patterns
+
+#### Hash Set Membership
+
+Use when the main requirement is repeatedly checking whether values
+exist.
+
+#### Boolean Presence Array
+
+Useful when the possible values belong to a small bounded range.
+
+#### Cyclic Sort / Index Placement
+
+Useful when values correspond directly to array indices and O(1)
+additional space is required.
+
+#### Ordered Enumeration
+
+Useful when the candidate space can be generated from smallest to
+largest without sorting.
+
+### Problems Using This Pattern
+
+- Smallest Missing Multiple of K
+- First Missing Positive
+- Missing Number
+- Find All Numbers Disappeared in an Array
+- Contains Duplicate
+- Longest Consecutive Sequence
