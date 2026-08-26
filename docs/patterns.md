@@ -1482,3 +1482,81 @@ largest without sorting.
 - Find All Numbers Disappeared in an Array
 - Contains Duplicate
 - Longest Consecutive Sequence
+
+## Exact-K Variable Sliding Window with Optimization
+
+## Recognition Signals
+
+Look for phrases such as:
+
+- "shortest substring"
+- "minimum substring"
+- "exactly K"
+- "contains K occurrences"
+- "at most K"
+- "longest/shortest valid window"
+- "lexicographically smallest among equal-length answers"
+
+## When to Use
+
+Use this pattern when:
+
+1. The candidate is a contiguous substring/subarray.
+2. A running property can be updated when the left or right boundary moves.
+3. A window becomes invalid after exceeding a threshold.
+4. The objective requires shrinking or expanding the window.
+
+For exact-K problems, a common structure is:
+
+- expand until the count reaches/exceeds K;
+- shrink while the count is greater than K;
+- once exactly K is reached, remove elements that do not affect the constraint;
+- evaluate the optimized window.
+
+## Reusable Template
+
+1. Initialize `left`, the running constraint state, and the best-answer state.
+2. Move `right` across the input.
+3. Add the right element to the window state.
+4. While the constraint is violated, move `left` and remove its contribution.
+5. Once the window satisfies the required condition, shrink any unnecessary elements.
+6. Evaluate the current candidate against the global best.
+7. Return the best candidate.
+
+## Common Variations
+
+- At most K occurrences.
+- Exactly K occurrences.
+- Minimum valid window.
+- Maximum valid window.
+- Equal-length candidates with lexicographical tie-breaking.
+- Sliding windows over counts, sums, frequencies, or distinct values.
+
+## Related Patterns
+
+### Minimum Window
+
+The goal is usually to find the smallest valid window and repeatedly shrink it while validity is preserved.
+
+### At-Most-K Window
+
+Maintain a window satisfying `count <= K`. Useful for many longest-substring problems.
+
+### Exact-K Window
+
+Often maintain `count <= K` and perform additional shrinking/logic when `count == K`.
+
+### Prefix Sum
+
+Useful when the property is easier to query over arbitrary fixed ranges than to maintain dynamically.
+
+## Problems Using This Pattern
+
+- Shortest and Lexicographically Smallest Beautiful String
+- Minimum Size Subarray Sum
+- Longest Substring Without Repeating Characters
+- Max Consecutive Ones III
+- Minimum Window Substring
+- Fruit Into Baskets
+- Subarray Product Less Than K
+- Binary Subarrays With Sum

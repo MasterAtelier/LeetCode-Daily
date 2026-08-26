@@ -185,3 +185,20 @@ Iterate only over legal choices using a loop with boundary checks.
 - **Category:** Logic
 - **Issue:** Identified suspicious methods correctly but didn't verify whether they could be removed.
 - **Lesson:** After finding a component, carefully read the problem for any additional validity conditions.
+
+## Shortest and Lexicographically Smallest Beautiful String
+Date: 2026-08-26
+
+### Mistakes
+
+1. **Used an invalid sentinel boundary without handling it during candidate comparison**
+
+- **Classification:** Logic / Implementation
+- **What I did:** Initialized `end = -1`, then compared candidates using `curr_len < end - start + 1`.
+- **Why it was incorrect:** With `start = 0` and `end = -1`, the stored length is `0`. A valid candidate has positive length, so `curr_len < 0` is never true and `curr_len == 0` is also false. Consequently, the first valid candidate was never stored.
+- **Why I might have thought it was correct:** `end = -1` is a common sentinel for "no answer yet", but the sentinel must be handled before ordinary length comparisons.
+- **How to recognize this in future problems:** Whenever an answer uses a sentinel such as `-1`, `None`, or an empty structure, check the first candidate explicitly rather than applying normal comparison logic to the sentinel.
+- **How to avoid repeating it:** Use `if end == -1 or ...` when evaluating the first candidate.
+
+### Root Cause
+The sliding-window logic itself was correct. The failure came from **answer initialization**, not from the window invariant.
