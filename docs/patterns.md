@@ -1560,3 +1560,113 @@ Useful when the property is easier to query over arbitrary fixed ranges than to 
 - Fruit Into Baskets
 - Subarray Product Less Than K
 - Binary Subarrays With Sum
+
+---
+
+## Lexicographical Greedy Construction with Feasibility
+
+### Pattern
+
+**Lexicographical Greedy Construction with Limited Backtracking**
+
+Construct the result from left to right while selecting the smallest candidate that can still lead to a valid complete solution.
+
+### Recognition Signals
+
+Look for:
+
+- "lexicographically smallest"
+- "lexicographically largest"
+- "smallest string greater than..."
+- "smallest permutation satisfying..."
+- "rearrange characters"
+- "construct the smallest..."
+- "next greater permutation"
+
+A particularly strong signal is:
+
+> Find the lexicographically smallest valid object that is strictly greater than another object.
+
+### When to Use
+
+Use this pattern when:
+
+- the answer is constructed sequentially,
+- lexicographical order determines optimality,
+- elements have limited frequencies,
+- choosing the smallest element blindly may make future completion impossible,
+- feasibility can be restored through limited backtracking.
+
+The key question is:
+
+> What is the smallest choice I can make here without making the remaining problem impossible?
+
+### Reusable Template
+
+1. Maintain the remaining available elements.
+2. Construct the result from left to right.
+3. Track the relationship between the current prefix and the target:
+   - smaller,
+   - equal,
+   - greater.
+4. Eliminate choices that immediately violate the required relationship.
+5. Try candidates from smallest to largest.
+6. Temporarily consume a candidate.
+7. Check whether the remaining state can still produce a valid result.
+8. If it cannot, restore the candidate.
+9. Once the comparison constraint is satisfied, greedily minimize the remaining suffix.
+
+### Common Variations
+
+- Next permutation
+- Next greater permutation
+- Lexicographically smallest constrained string
+- Constructing strings from character frequencies
+- Digit rearrangement
+- Greedy construction with feasibility checking
+- Greedy construction with limited backtracking
+
+### Related Patterns
+
+#### Next Permutation
+
+Find the rightmost position that can be increased and construct the smallest possible suffix.
+
+#### Backtracking
+
+General backtracking may explore many alternatives.
+
+Lexicographical backtracking explores candidates in sorted order and stops at the first feasible solution.
+
+#### Greedy + Feasibility Check
+
+Choose the smallest candidate only when the remaining state can still produce a valid result.
+
+#### Tight-State / Digit DP
+
+The `equal` versus `already greater` state resembles the `tight` concept used in digit DP.
+
+The difference is that this problem consumes characters from a multiset.
+
+### Problems Using This Pattern
+
+- **31. Next Permutation** — smallest permutation larger than the current permutation.
+- **556. Next Greater Element III** — next greater permutation of digits.
+- **316. Remove Duplicate Letters** — lexicographically smallest valid construction.
+- **1081. Smallest Subsequence of Distinct Characters** — lexicographically minimal constrained subsequence.
+- **2375. Construct Smallest Number From DI String** — smallest sequence satisfying ordering constraints.
+- **3720. Lexicographically Smallest Permutation Greater Than Target** — frequency counting + lexicographical construction + limited backtracking.
+
+### Key Recognition Rule
+
+When you see:
+
+> **lexicographically smallest + constraint**
+
+think:
+
+> **Try candidates from smallest to largest, but only commit when future completion remains possible.**
+
+When the constraint involves comparison against another string, additionally think:
+
+> **Stay equal to the target as long as possible, then make the smallest feasible increase and minimize the suffix.**

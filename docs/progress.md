@@ -20,3 +20,4 @@
 | 1927 | Sum Game | Medium | Greedy + Game Theory |Yes | No | No | Yes | No | No |
 | 3718 | Smallest Missing Multiple of K | Easy | Hash Set + Enumeration | Yes | No | No |
 | 2904 | Shortest and Lexicographically Smallest Beautiful String | Medium | Sliding Window / Two Pointers | No | Yes | No |
+| 3720 | Lexicographically Smallest Permutation Greater Than Target | Medium | Lexicographical Greedy + Limited Backtracking | Yes | No | No |
