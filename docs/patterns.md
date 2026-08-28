@@ -1670,3 +1670,55 @@ think:
 When the constraint involves comparison against another string, additionally think:
 
 > **Stay equal to the target as long as possible, then make the smallest feasible increase and minimize the suffix.**
+
+## Pattern: Structured Multiset Next-Permutation
+
+### Recognition Signals
+
+Look for problems where:
+
+- The result is a permutation of a multiset with repeated values.
+- A structural rule determines part of the output from another part.
+- The objective is the next or lexicographically smallest valid arrangement.
+- The independently selectable portion is smaller than the complete result.
+
+A palindrome is a key example: once its left half and optional center are chosen,
+the right half is forced by mirroring.
+
+### When to Use
+
+Use this pattern when a permutation has a structural rule that determines part of
+the output from another part. Perform the lexicographical search only over the
+independently selectable portion, while accounting for the full multiset's
+frequencies.
+
+### Reusable Template
+
+1. Identify the independently selectable portion of the result.
+2. Convert the input into frequency counts rather than treating equal values as
+    distinct.
+3. Find the rightmost position where the independent portion can be increased.
+4. Replace it with the smallest available greater value.
+5. Minimize the remaining independent suffix using the remaining frequencies.
+6. Reconstruct the forced portion, such as the reversed left half of a palindrome.
+7. Handle the case where no increase is possible.
+
+### Key Insight
+
+The lexicographical comparison is decided by the first differing position in the
+independent portion. Searching over the forced portion adds redundant work and can
+break the structural constraint; search over the multiset permutation that actually
+controls the result, then derive the rest deterministically.
+
+### Related Patterns
+
+- **Next Permutation:** Find the rightmost increase and minimize the suffix.
+- **Frequency Counting:** Track repeated values and restore unused counts.
+- **Lexicographical Greedy Construction with Feasibility:** Choose the smallest
+   feasible increase before minimizing the remainder.
+
+### Problems Using This Pattern
+
+- Lexicographically smallest palindromic permutation greater than a target.
+- Next palindrome from a multiset of digits or characters.
+- Constrained symmetric arrangements where one half determines the other.
