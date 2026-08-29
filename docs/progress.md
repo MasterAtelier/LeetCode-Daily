@@ -22,3 +22,4 @@
 | 2904 | Shortest and Lexicographically Smallest Beautiful String | Medium | Sliding Window / Two Pointers | No | Yes | No |
 | 3720 | Lexicographically Smallest Permutation Greater Than Target | Medium | Lexicographical Greedy + Limited Backtracking | Yes | No | No |
 | 3943 | Lexicographically Smallest Palindromic Permutation Greater Than Target | Medium | Greedy + Backtracking + Frequency Counting | Yes | No | No |
+| 2948 | Make Lexicographically Smallest Array by Swapping Elements | Medium | Sorted Threshold Grouping / Connected Components | Yes | No | No |

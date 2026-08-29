@@ -1722,3 +1722,77 @@ controls the result, then derive the rest deterministically.
 - Lexicographically smallest palindromic permutation greater than a target.
 - Next palindrome from a multiset of digits or characters.
 - Constrained symmetric arrangements where one half determines the other.
+
+---
+
+## Pattern: Sorted Threshold Grouping
+
+### Recognition Signals
+
+Look for:
+
+- Swapping elements when their values differ by at most a threshold.
+- Repeated operations.
+- A lexicographical minimum or maximum.
+- Elements becoming reachable through intermediate elements.
+- A condition based on numerical distance.
+
+### When to Use
+
+Use this pattern when:
+
+1. The relationship between elements depends only on their values.
+2. The relationship is based on a threshold.
+3. Repeated operations make the relationship transitive.
+4. Sorting allows the connected components to be identified from adjacent gaps.
+
+### Reusable Template
+
+1. Pair each value with its original position.
+2. Sort by value.
+3. Scan the sorted values.
+4. Start a new component whenever the adjacent value gap exceeds the threshold.
+5. For each component:
+   - collect its values;
+   - collect its original positions;
+   - sort the positions;
+   - assign sorted values to sorted positions.
+6. Reconstruct the answer.
+
+### Common Variations
+
+- Union-Find can explicitly construct the connected components.
+- Some problems require grouping by a maximum allowed difference.
+- Some problems require maximizing rather than minimizing lexicographical order.
+- Some problems require processing components independently.
+
+### Related Patterns
+
+- Union-Find / Connected Components
+- Sorting + Greedy
+- Sweep Line
+- Merge Intervals
+- Coordinate/Value Compression
+
+### Problems Using This Pattern
+
+- LeetCode 2948 — Make Lexicographically Smallest Array by Swapping Elements
+- LeetCode 1202 — Smallest String With Swaps
+- Connected Components problems where edges can be inferred from sorted values
+- Threshold-based clustering problems
+
+### Key Recognition Rule
+
+When you see:
+
+    "You may repeatedly swap ..."
+    
+and the swap condition depends on:
+
+    |value1 - value2| <= limit
+
+ask:
+
+    "What are the connected components of the values?"
+
+Then check whether sorting makes those components obvious.
