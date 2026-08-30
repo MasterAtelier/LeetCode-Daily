@@ -202,3 +202,66 @@ Date: 2026-08-26
 
 ### Root Cause
 The sliding-window logic itself was correct. The failure came from **answer initialization**, not from the window invariant.
+
+## Removing Minimum and Maximum From Array
+
+**Date:** 2026-08-30
+
+### Mistakes
+
+#### 1. Logic — Independently adding minimum and maximum deletion costs
+
+Initially, the solution calculated the minimum deletion cost for the maximum and minimum independently and added them.
+
+The mistake was that both target elements can sometimes be removed by the **same deletion operations**.
+
+The correct approach is to consider the three complete strategies rather than independently optimizing each element.
+
+#### 2. Logic — Using the wrong boundary for right-side deletion
+
+The first corrected formula used:
+
+```
+n - right
+```
+
+for deleting both elements from the right.
+
+This is incorrect because when deleting exclusively from the right, we must reach the **leftmost** target element.
+
+The correct cost is:
+
+```
+n - left
+```
+
+**Why I might have thought it was correct:**
+
+`right` is the rightmost relevant index, so it can feel intuitive to calculate the distance from that index to the right boundary. However, reaching `right` does not necessarily remove the earlier target at `left`.
+
+**How to recognize this mistake in future problems:**
+
+When calculating a boundary-removal cost, ask:
+
+> Which target element must the deletion process reach for ALL required elements to have been removed?
+
+**How to avoid repeating it:**
+
+Draw the indices and explicitly mark the deleted interval before writing the formula.
+
+### Lessons
+
+- Do not independently optimize operations when operations can overlap.
+- For boundary problems, reason about the entire deleted interval.
+- Identify the exact target boundary that each strategy must reach.
+- Draw a small index diagram when an off-by-one or boundary choice is unclear.
+
+### How to avoid in future
+
+For problems involving deletion from array ends:
+
+1. Mark all required target indices.
+2. Sort/normalize their positions.
+3. Draw each possible deletion strategy.
+4. Calculate the number of elements removed by each strategy.
+5. Take the minimum.

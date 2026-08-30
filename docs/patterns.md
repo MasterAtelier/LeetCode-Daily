@@ -1796,3 +1796,77 @@ ask:
     "What are the connected components of the values?"
 
 Then check whether sorting makes those components obvious.
+
+---
+
+## Pattern: Boundary Strategy Enumeration
+
+### Recognition Signals
+
+Look for phrases such as:
+
+- "remove from either end"
+- "delete from the beginning or end"
+- "minimum number of deletions"
+- "remove specific elements"
+- "reach an element from either side"
+- "minimum operations to remove elements from an array"
+
+### When to Use
+
+Use this pattern when:
+
+- Operations are restricted to array boundaries.
+- The required elements have known positions.
+- The number of structurally distinct strategies is constant.
+- Simulation is unnecessary because each strategy can be represented mathematically.
+
+### Reusable Template
+
+1. Identify the target elements.
+2. Find their positions.
+3. Normalize the positions into `left <= right`.
+4. Enumerate every distinct boundary strategy.
+5. Calculate the cost of each strategy.
+6. Return the minimum cost.
+
+For two target positions:
+
+```
+Both from left:
+    right + 1
+
+Both from right:
+    n - left
+
+One from each side:
+    left + 1 + n - right
+```
+
+### Common Variations
+
+- Removing one target element from either side.
+- Removing several target elements from array boundaries.
+- Minimizing operations rather than number of elements removed.
+- Choosing between prefix, suffix, or two-sided removal.
+- Applying similar reasoning to strings/deques.
+
+### Related Patterns
+
+**Two-pointer:**
+Can also reason about left/right boundaries, but usually involves progressively moving two boundaries rather than enumerating fixed strategies.
+
+**Sliding window:**
+Useful when the objective is to keep a contiguous region rather than delete a fixed set of boundary elements.
+
+**Greedy:**
+The final solution chooses the cheapest among the valid structural strategies.
+
+**Prefix/suffix reasoning:**
+Useful whenever operations remove complete prefixes or suffixes.
+
+### Problems Using This Pattern
+
+- LeetCode 2091 — Removing Minimum and Maximum From Array
+- Similar array problems involving deleting prefixes/suffixes to expose required elements.
+- Deque-style minimization problems where operations are restricted to the two boundaries.
