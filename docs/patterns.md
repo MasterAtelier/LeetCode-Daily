@@ -1870,3 +1870,249 @@ Useful whenever operations remove complete prefixes or suffixes.
 - LeetCode 2091 — Removing Minimum and Maximum From Array
 - Similar array problems involving deleting prefixes/suffixes to expose required elements.
 - Deque-style minimization problems where operations are restricted to the two boundaries.
+
+---
+
+## Pattern: Single-Pass Constant-Space Tracking
+
+### Recognition Signals
+
+Look for problems containing:
+
+- "minimum distance between..."
+- "maximum distance between..."
+- "first and last..."
+- "consecutive occurrences..."
+- "critical points"
+- "special positions"
+- Linked-list nodes whose status depends on neighboring nodes
+
+A particularly strong signal is when the problem asks for both:
+
+- a minimum distance between consecutive special elements
+- a maximum distance across the entire sequence
+
+---
+
+## When to Use
+
+Use this pattern when:
+
+1. Elements can be processed sequentially.
+2. A special element can be identified using local information.
+3. The final answer depends only on a summary of previously encountered special elements.
+4. Storing every special element is unnecessary.
+
+For this problem:
+
+- Critical point detection requires three neighboring values.
+- Minimum distance requires the previous critical point.
+- Maximum distance requires the first and last critical points.
+
+Therefore, constant space is sufficient.
+
+---
+
+## Reusable Template
+
+During a single traversal:
+
+1. Maintain the minimum amount of historical state needed to identify the next special element.
+2. When a special element appears:
+   - initialize the first occurrence if necessary
+   - compare against the previous occurrence
+   - update the minimum/maximum metric
+   - update the latest occurrence
+3. Continue until the sequence ends.
+4. Handle the case where fewer than the required number of special elements exist.
+
+---
+
+## Common Variations
+
+### First and Last Occurrence
+
+Track:
+
+- first special index
+- previous special index
+- latest special index
+
+This is enough to compute:
+
+- minimum distance between consecutive special positions
+- maximum distance between the ends of the sequence
+
+### Consecutive Special Elements
+
+The minimum distance is never between non-adjacent elements.
+
+If special positions are:
+
+```text
+a, b, c
+```
+
+then:
+
+```text
+c - a > b - a
+c - a > c - b
+```
+
+So the minimum must be one of the adjacent gaps.
+
+### Local Property Checking
+
+A special element is often determined only from a small neighborhood:
+
+```text
+previous, current, next
+```
+
+For example:
+
+```python
+prev < curr > next
+prev > curr < next
+```
+
+This enables detection without storing the full history.
+
+---
+
+## Related Patterns
+
+- Sliding Window
+- Two Pointers
+- Prefix/Suffix Tracking
+- Single-Pass Streaming State
+- Linked-List Traversal
+
+---
+
+## Problems Using This Pattern
+
+- 2058. Find the Minimum and Maximum Number of Nodes Between Critical Points
+- Problems involving consecutive special positions and first/last global extremes
+- Linked-list problems where a local condition defines a global metric
+
+---
+
+## Interview Heuristic
+
+When a problem asks for both:
+
+- a minimum distance between nearby important positions, and
+- a maximum distance across the whole sequence,
+
+ask:
+
+> Do I really need to store every special position, or can I keep only the first, previous, and latest one?
+
+If the answer is yes, you are likely looking at a single-pass constant-space solution.
+
+---
+
+### Useful for maximum span.
+
+### Consecutive Occurrence Distance
+
+Track:
+
+```
+previous occurrence
+minimum distance
+```
+
+Useful for minimum gap.
+
+### First + Previous + Latest
+
+Useful when a problem requires both:
+
+```
+global span
+local gaps
+```
+
+This is exactly the structure used by this problem.
+
+---
+
+## Related Patterns
+
+### Sliding Window
+
+Both approaches maintain a small amount of state while traversing a sequence.
+
+Difference:
+
+- Sliding window maintains a contiguous range.
+- This pattern tracks selected/special positions.
+
+### Prefix/Suffix Tracking
+
+Both rely on retaining summarized historical information rather than storing the entire sequence.
+
+### One-Pass Aggregation
+
+The general principle is:
+
+> If the answer can be updated whenever an element is encountered, a second pass or full storage may not be necessary.
+
+---
+
+## Problems Using This Pattern
+
+1. **Find the Minimum and Maximum Number of Nodes Between Critical Points**
+
+- Track first, previous, and latest critical points.
+2. **Best Time to Buy and Sell Stock**
+
+- Track the minimum value seen so far while scanning.
+3. **Contains Duplicate II**
+
+- Track recent occurrence positions while scanning.
+4. **Maximum Consecutive Ones III**
+
+- Maintain summarized state over a moving sequence.
+5. **Longest Substring Without Repeating Characters**
+
+- Track the latest occurrence of relevant characters.
+6. **Minimum Size Subarray Sum**
+
+- Maintain enough state to update the current candidate range.
+7. **Maximum Subarray**
+
+- Maintain a compressed summary of the best state ending at the current position.
+
+---
+
+## Key Recognition Rule
+
+When a problem asks:
+
+> "Find the minimum gap between special elements and the maximum distance between the first and last special elements."
+
+Immediately consider:
+
+```
+first_special
+previous_special
+minimum_gap
+```
+
+The latest special position is simply the current/previous special position.
+
+This can often reduce:
+
+```
+O(n) space
+```
+
+to:
+
+```
+O(1) space
+```

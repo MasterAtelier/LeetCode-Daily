@@ -23,3 +23,4 @@
 | 3720 | Lexicographically Smallest Permutation Greater Than Target | Medium | Lexicographical Greedy + Limited Backtracking | Yes | No | No |
 | 3943 | Lexicographically Smallest Palindromic Permutation Greater Than Target | Medium | Greedy + Backtracking + Frequency Counting | Yes | No | No |
 | 2948 | Make Lexicographically Smallest Array by Swapping Elements | Medium | Sorted Threshold Grouping / Connected Components | Yes | No | No |
+| 2058 | Find the Minimum and Maximum Number of Nodes Between Critical Points | Medium | Single-Pass Constant-Space Tracking | Yes | No | No |
