@@ -2116,3 +2116,40 @@ to:
 ```
 O(1) space
 ```
+## Pattern: Alternating Assignment by Nesting Depth
+
+### Recognition Signals
+
+- A balanced nested sequence must be partitioned into valid subsequences.
+- The goal is to minimize the maximum depth across groups.
+- Each element belongs to a structural level determined by a running balance/depth.
+
+### When to Use
+
+Use this pattern when items at each nested layer can be split among groups and assigning alternating layers preserves each group's structure. It is especially effective for parentheses because every matching pair enters and exits at the same depth.
+
+### Reusable Template
+
+1. Scan the nested sequence while maintaining its current depth.
+2. On an opening delimiter, enter the next depth and assign according to that depth's parity.
+3. On a closing delimiter, assign according to the current depth's parity, then leave that depth.
+4. Return the per-element group labels.
+
+### Common Variations
+
+- Use zero-based depth or one-based depth; this may swap group labels but does not affect the result.
+- Split among more than two groups by assigning `depth % group_count`, when the structure and objective support it.
+- Use a stack instead of a counter when later operations need the actual matching positions, not only nesting level.
+
+### Related Patterns
+
+- **Stack-based parsing:** Use a stack when matching identities or nested values must be retrieved; a counter suffices when only depth matters.
+- **Greedy partitioning:** The parity rule balances the maximum depth by distributing successive levels across groups.
+- **Prefix balance:** The running depth is a prefix aggregate that describes the current nesting layer.
+
+### Problems Using This Pattern
+
+1. **1111. Maximum Nesting Depth of Two Valid Parentheses Strings:** Alternate nested levels between two valid subsequences.
+2. **1021. Remove Outermost Parentheses:** Use nesting depth to identify outermost layers.
+3. **1614. Maximum Nesting Depth of the Parentheses:** Track the maximum prefix depth.
+4. **856. Score of Parentheses:** Use nesting structure to compute a value.
