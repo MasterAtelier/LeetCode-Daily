@@ -2153,3 +2153,42 @@ Use this pattern when items at each nested layer can be split among groups and a
 2. **1021. Remove Outermost Parentheses:** Use nesting depth to identify outermost layers.
 3. **1614. Maximum Nesting Depth of the Parentheses:** Track the maximum prefix depth.
 4. **856. Score of Parentheses:** Use nesting structure to compute a value.
+
+## Pattern: Backtracking with Prefix Feasibility Pruning
+
+### Recognition Signals
+
+- Generate all objects that satisfy a constraint.
+- A partial candidate can be recognized as impossible before it is complete.
+- The constraints can be updated from a small amount of state while constructing the candidate.
+
+### When to Use
+
+Use this variation when a prefix invariant rules out entire subtrees of the search. Extend only prefixes that remain feasible, especially when the output itself is combinatorial and must be enumerated.
+
+### Reusable Template
+
+1. Keep the current partial candidate and the minimal state needed to test feasibility.
+2. If the candidate is complete, emit it.
+3. For each legal next choice, update the candidate and state.
+4. Recurse only if the updated prefix still satisfies the invariant.
+5. Undo the choice when using mutable state.
+
+### Common Variations
+
+- Constrain counts, such as limiting choices to a fixed quota.
+- Constrain prefix balance, as with opening and closing parentheses.
+- Use a mutable path with append/recurse/pop to avoid copying each partial candidate.
+- Order choices to produce results in a desired order when the problem permits it.
+
+### Related Patterns
+
+- **Generate-and-test:** Enumerates candidates first and checks constraints afterward; prefix pruning avoids exploring candidates already known to fail.
+- **Dynamic programming:** Useful when many search paths reach the same state and the goal is to count or optimize; backtracking is natural when distinct outputs must be returned.
+
+### Problems Using This Pattern
+
+1. **22. Generate Parentheses:** Add an opening parenthesis while below quota and a closing parenthesis only when it preserves prefix balance.
+2. **46. Permutations:** Branch over unused values and emit when every position is filled.
+3. **78. Subsets:** Branch on including or excluding each element; there is no invalid-prefix constraint.
+4. **301. Remove Invalid Parentheses:** Explore removals while pruning based on validity and minimum edit requirements.
