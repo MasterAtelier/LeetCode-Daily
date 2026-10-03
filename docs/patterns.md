@@ -2192,3 +2192,43 @@ Use this variation when a prefix invariant rules out entire subtrees of the sear
 2. **46. Permutations:** Branch over unused values and emit when every position is filled.
 3. **78. Subsets:** Branch on including or excluding each element; there is no invalid-prefix constraint.
 4. **301. Remove Invalid Parentheses:** Explore removals while pruning based on validity and minimum edit requirements.
+## Pattern: Stack of Indices with Invalid Boundaries
+
+### Recognition Signals
+
+- Find the longest contiguous valid region of a delimiter sequence.
+- Matching pairs can fail on either side, and invalid elements split independent regions.
+- The answer depends on the length between the current position and the most recent unmatched delimiter.
+
+### When to Use
+
+Use this pattern when scanning a sequence where unmatched opening symbols can later become useful and unmatched closing symbols permanently invalidate the prefix they end. Store positions on a stack and use the nearest unmatched symbol as the boundary for a valid suffix.
+
+### Reusable Template
+
+1. Keep a stack of indices for unmatched opening symbols.
+2. Track the most recent unmatched closing position (or seed a stack with a sentinel).
+3. On an opening symbol, push its index.
+4. On a closing symbol, either record it as a new boundary if no opening matches it, or pop one opening.
+5. The nearest remaining unmatched boundary determines the current valid suffix start.
+6. Update the best length and return it after the scan.
+
+### Common Variations
+
+- Put a sentinel index on the stack and use only stack operations to track the current boundary.
+- Use dynamic programming to store the valid suffix length ending at each position.
+- Use forward and backward balance scans to reduce auxiliary space to O(1).
+
+### Related Patterns
+
+- **Monotonic stack:** Also stores indices, but preserves an ordering to answer next/previous greater or smaller queries.
+- **Sliding window:** Maintains a movable range; unlike this delimiter scan, invalid boundaries may require stack history rather than a frequency condition.
+- **Prefix balance:** Tracks open-minus-close counts; often pairs naturally with a reverse pass when only a constant-space scan is desired.
+
+### Problems Using This Pattern
+
+| Problem | Variation |
+|---------|-----------|
+| 32. Longest Valid Parentheses | Stack of unmatched opening indices plus last unmatched closing boundary |
+| 20. Valid Parentheses | Stack verifies matching types for the entire string |
+| 1249. Minimum Remove to Make Valid Parentheses | Track unmatched delimiters to remove |
