@@ -2232,3 +2232,54 @@ Use this pattern when scanning a sequence where unmatched opening symbols can la
 | 32. Longest Valid Parentheses | Stack of unmatched opening indices plus last unmatched closing boundary |
 | 20. Valid Parentheses | Stack verifies matching types for the entire string |
 | 1249. Minimum Remove to Make Valid Parentheses | Track unmatched delimiters to remove |
+
+## Pattern: Greedy Range of Possible Balances
+
+### Recognition Signals
+
+- A string has a prefix-balance rule, such as parentheses that cannot close before they open.
+- Some positions have a small set of possible values or effects.
+- The task asks whether any assignment of those choices can satisfy the sequence constraints.
+
+### When to Use
+
+Use this pattern when the state can be summarized by an integer balance and the reachable balances after each prefix form a continuous interval. Tracking the minimum and maximum reachable values can replace enumerating assignments or storing a set of balances.
+
+### Key Insight
+
+For a wildcard that can act as an opening parenthesis, a closing parenthesis, or nothing, every prefix has a range `[minimum, maximum]` of possible unmatched-open counts. A negative maximum means no assignment can make that prefix valid. At the end, zero must be within the range; because the minimum is clamped at zero, this is equivalent to `minimum == 0`.
+
+### Reusable Template
+
+1. Initialize the minimum and maximum reachable state values.
+2. For each fixed symbol, update both bounds by its effect.
+3. For each flexible symbol, expand the bounds to cover all permitted effects.
+4. Clamp bounds to the problem's legal state domain when appropriate.
+5. Stop if the reachable range becomes empty.
+6. Check whether the target state is reachable at the end.
+
+### Common Variations
+
+- Wildcards that represent one of several increments or decrements.
+- Prefix sums with uncertain values bounded by a small range.
+- Feasibility checks where a full DP set collapses into interval bounds.
+- The same range technique can be adapted to count or optimization tasks only when the needed information is preserved by the endpoints.
+
+### Related Patterns
+
+- **Prefix balance:** Tracks one exact balance when there are no choices.
+- **Dynamic programming over reachable states:** Tracks a set of states when reachable values are not contiguous.
+- **Greedy feasibility:** Commits to local choices; this range method instead preserves all feasible choices in compressed form.
+
+### Problems Using This Pattern
+
+| Problem | Variation |
+|---------|-----------|
+| 678. Valid Parenthesis String | A wildcard can open, close, or be empty; track the feasible open-count interval |
+| 2116. Check if a Parentheses String Can Be Valid | Feasibility under position-based character choices and prefix constraints |
+
+### Interview Tips
+
+- State the invariant clearly: the interval contains every reachable balance, not just a guessed balance.
+- Prove that choices keep the reachable values contiguous; otherwise two bounds may lose information.
+- Identify the early impossibility condition and the final target-reachability condition separately.

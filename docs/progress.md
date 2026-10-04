@@ -27,3 +27,4 @@
 | 1111 | Maximum Nesting Depth of Two Valid Parentheses Strings | Medium | Greedy Depth Parity | Yes | No | No |
 | 22 | Generate Parentheses | Medium | Backtracking with Prefix Pruning | Yes | No | No |
 | 32 | Longest Valid Parentheses | Hard | Stack of Indices with Invalid Boundaries | Yes | No | No |
+| 678 | Valid Parenthesis String | Medium | Greedy Range of Possible Balances | No | N/A (solution provided) | No |
