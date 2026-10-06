@@ -28,3 +28,4 @@
 | 22 | Generate Parentheses | Medium | Backtracking with Prefix Pruning | Yes | No | No |
 | 32 | Longest Valid Parentheses | Hard | Stack of Indices with Invalid Boundaries | Yes | No | No |
 | 678 | Valid Parenthesis String | Medium | Greedy Range of Possible Balances | No | N/A (solution provided) | No |
+| 921 | Minimum Add to Make Parentheses Valid | Medium | Greedy Parentheses Balance / Deficit Counting | Yes | No | No |

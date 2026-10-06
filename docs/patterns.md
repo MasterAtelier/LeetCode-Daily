@@ -2283,3 +2283,41 @@ For a wildcard that can act as an opening parenthesis, a closing parenthesis, or
 - State the invariant clearly: the interval contains every reachable balance, not just a guessed balance.
 - Prove that choices keep the reachable values contiguous; otherwise two bounds may lose information.
 - Identify the early impossibility condition and the final target-reachability condition separately.
+
+## Pattern Variation: Prefix Balance with Insertion Deficits
+
+### Recognition Signals
+
+- A fixed parentheses string may be repaired by inserting missing parentheses.
+- The task asks for the minimum number of insertions, not the repaired string.
+- An unmatched closing parenthesis cannot be matched by a later opening parenthesis.
+
+### When to Use
+
+Use this variation when insertion cost is one per parenthesis and only the minimum count is required. Track unmatched opens and count every close that arrives when no open is available; the remaining opens are the closing insertions needed at the end.
+
+### Reusable Template
+
+1. Initialize `unmatched_opens = 0` and `insertions = 0`.
+2. For each opening symbol, increment `unmatched_opens`.
+3. For each closing symbol, decrement `unmatched_opens` if positive; otherwise increment `insertions`.
+4. Add the remaining `unmatched_opens` to `insertions` after the scan.
+
+### Common Variations
+
+- Use one balance counter and add an insertion whenever a close would make the balance negative; reset the balance to zero, then add the final balance.
+- Use a stack instead of a counter when the exact positions of unmatched parentheses are needed.
+- For removal problems, record unmatched positions and delete them rather than counting required insertions.
+
+### Related Patterns
+
+- **Greedy range of possible balances:** Extends balance tracking to inputs where symbols have multiple permitted effects.
+- **Stack of indices with invalid boundaries:** Retains positions when valid substring boundaries matter.
+- **Prefix balance:** Maintains the open-minus-close count and enforces nonnegative prefixes.
+
+### Problems Using This Variation
+
+| Problem | Variation |
+|---------|-----------|
+| 921. Minimum Add to Make Parentheses Valid | Count unmatched closes during the scan and unmatched opens at the end |
+| 1249. Minimum Remove to Make Valid Parentheses | Identify unmatched positions to remove |
