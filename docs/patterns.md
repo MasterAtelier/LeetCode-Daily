@@ -2321,3 +2321,40 @@ Use this variation when insertion cost is one per parenthesis and only the minim
 |---------|-----------|
 | 921. Minimum Add to Make Parentheses Valid | Count unmatched closes during the scan and unmatched opens at the end |
 | 1249. Minimum Remove to Make Valid Parentheses | Identify unmatched positions to remove |
+
+## Pattern Variation: Nesting Depth as a Contribution Weight
+
+### Recognition Signals
+
+- A balanced nested expression assigns a score to its smallest structural units.
+- Wrapping a group applies a repeated multiplier to every unit inside it.
+- The score of each primitive can be determined from its nesting depth.
+
+### When to Use
+
+Use this variation when the input is guaranteed structurally valid and the scoring rules apply independently to primitive units according to their enclosing depth. A running depth then replaces a stack of partial group values.
+
+### Reusable Template
+
+1. Initialize a depth counter and an answer accumulator.
+2. Scan the structural symbols while recognizing each primitive unit.
+3. Add that unit's base value multiplied by the nesting weight at the unit's depth.
+4. Update depth as opening and closing symbols are traversed.
+
+### Common Variations
+
+- If wrapping multiplies by `k`, a unit at depth `d` receives weight `k**d`.
+- If each primitive has its own value, multiply that base value by the depth weight.
+- If the input is not guaranteed valid or complete subexpression values are needed, use a stack or parser instead.
+
+### Related Patterns
+
+- **Prefix balance:** Tracks nesting depth but usually checks validity or a prefix condition.
+- **Stack-based parsing:** Stores partial results when sibling or nested group values must be combined explicitly.
+- **Greedy balance / insertion deficits:** Tracks unmatched delimiter counts when the input may be invalid.
+
+### Problems Using This Pattern
+
+| Problem | Variation |
+|---------|-----------|
+| 856. Score of Parentheses | Each primitive `()` contributes `2**depth`; adjacent primitives are summed |

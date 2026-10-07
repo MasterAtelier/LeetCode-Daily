@@ -57,4 +57,5 @@ def test_multiple_critical_points():
 
     head = build_list([1, 5, 2, 4, 1, 3, 2])
 
+
     assert Solution().nodesBetweenCriticalPoints(head) == [1, 4]

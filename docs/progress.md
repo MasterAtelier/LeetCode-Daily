@@ -29,3 +29,4 @@
 | 32 | Longest Valid Parentheses | Hard | Stack of Indices with Invalid Boundaries | Yes | No | No |
 | 678 | Valid Parenthesis String | Medium | Greedy Range of Possible Balances | No | N/A (solution provided) | No |
 | 921 | Minimum Add to Make Parentheses Valid | Medium | Greedy Parentheses Balance / Deficit Counting | Yes | No | No |
+| 856 | Score of Parentheses | Medium | Nesting Depth / Weighted Primitive Contributions | Yes | No | No |
