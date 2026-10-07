@@ -2358,3 +2358,50 @@ Use this variation when the input is guaranteed structurally valid and the scori
 | Problem | Variation |
 |---------|-----------|
 | 856. Score of Parentheses | Each primitive `()` contributes `2**depth`; adjacent primitives are summed |
+
+## Pattern: BFS over State-Space Edits
+
+### Recognition Signals
+
+- The task asks for the minimum number of equal-cost edits or moves.
+- Each candidate configuration can generate neighboring configurations through one legal operation.
+- There can be multiple distinct target states at the same minimum distance.
+- Repeating an operation sequence may lead to a previously seen state.
+
+### When to Use
+
+Use breadth-first search when the state space is unweighted and every operation contributes the same cost. Explore all states at distance zero, then distance one, then distance two. The first layer containing a target has the minimum operation count. Continue through the whole layer when every minimum target is required.
+
+### Reusable Template
+
+1. Put the starting state in a queue or current layer and mark it seen.
+2. For each state in the current layer, check whether it is a target.
+3. If target states are found at this distance, collect the full layer's targets and return them.
+4. Otherwise, generate all legal one-operation neighbors.
+5. Add each unseen neighbor to the next layer and mark it seen.
+6. Advance to the next layer and increase the distance by one.
+
+### Common Variations
+
+- **Shortest distance to one target:** Stop when the first target is dequeued.
+- **All minimum-cost targets:** Inspect the entire target-containing layer before returning.
+- **Path reconstruction:** Store a predecessor for each discovered state.
+- **Implicit state graph:** Generate neighbors on demand instead of materializing all graph edges.
+- **State deduplication:** Use a hash set when different action sequences can reach the same state.
+
+### Related Patterns
+
+- **DFS/backtracking:** Useful for enumerating constrained choices, but does not order solutions by edit count.
+- **Dijkstra's algorithm:** Use when edge costs are nonnegative but not all equal.
+- **Dynamic programming:** Useful when states have overlapping subproblems and the entire graph need not be explored by distance layers.
+- **Greedy repair:** Can be faster when local choices are provably sufficient, but may miss alternative minimum results without branching.
+
+### Problems Using This Pattern
+
+| Problem | Variation |
+|---------|-----------|
+| 301. Remove Invalid Parentheses | Delete one parenthesis per edge; return all valid strings at the minimum BFS depth |
+| 127. Word Ladder | Change one letter per edge; find a shortest transformation sequence |
+| 752. Open the Lock | Rotate one wheel per edge; find the fewest turns to the target |
+| 433. Minimum Genetic Mutation | Change one character per edge; find the fewest valid mutations |
+| 934. Shortest Bridge | Expand from one island until BFS reaches the other |
