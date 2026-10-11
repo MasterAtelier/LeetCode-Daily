@@ -1994,6 +1994,7 @@ This enables detection without storing the full history.
 ## Problems Using This Pattern
 
 - 2058. Find the Minimum and Maximum Number of Nodes Between Critical Points
+- 2778. Sum of Squares of Special Elements (filter and aggregate based on an index property)
 - Problems involving consecutive special positions and first/last global extremes
 - Linked-list problems where a local condition defines a global metric
 

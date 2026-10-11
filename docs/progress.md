@@ -31,3 +31,4 @@
 | 921 | Minimum Add to Make Parentheses Valid | Medium | Greedy Parentheses Balance / Deficit Counting | Yes | No | No |
 | 856 | Score of Parentheses | Medium | Nesting Depth / Weighted Primitive Contributions | Yes | No | No |
 | 301 | Remove Invalid Parentheses | Hard | BFS over State-Space Edits | N/A (review only) | N/A (review only) | No |
+| 2778 | Sum of Squares of Special Elements | Easy | Single-Pass Index Filtering and Aggregation | Yes | No | No |
