@@ -2406,3 +2406,39 @@ Use breadth-first search when the state space is unweighted and every operation 
 | 752. Open the Lock | Rotate one wheel per edge; find the fewest turns to the target |
 | 433. Minimum Genetic Mutation | Change one character per edge; find the fewest valid mutations |
 | 934. Shortest Bridge | Expand from one island until BFS reaches the other |
+# Pattern: Greedy Bit Redistribution for Convex Objectives
+
+## Recognition Signals
+
+- Pair operations use AND and OR.
+- The total number of set bits per position is conserved.
+- The goal maximizes a convex score such as a sum of squares.
+
+## When to Use
+
+Use this pattern when operations can redistribute independently conserved bit copies and the objective benefits from concentrating value. Verify that the operations permit the needed redistribution, then construct high-value outputs by consuming one available copy of each bit at a time.
+
+## Reusable Template
+
+1. Count how many copies of each bit exist across all values.
+2. For each output value required by the objective, include every bit whose remaining count is positive.
+3. Decrement the count for each included bit.
+4. Accumulate the output's contribution, applying any required modulus.
+
+## Common Variations
+
+- Change the number of bit positions based on the input bound.
+- Build only a limited number of outputs when only the top `k` contribute.
+- Replace sum of squares with another convex scoring function, after proving the packing order remains optimal.
+
+## Related Patterns
+
+- **Bitwise contribution counting:** Count each bit's influence independently, usually for sums over subsets.
+- **Greedy balancing:** Appropriate when the objective is concave or minimizes a convex cost, which favors spreading rather than concentrating.
+- **Majorization:** A proof framework for showing that one distribution is more concentrated than another and therefore better for convex objectives.
+
+## Problems Using This Pattern
+
+| Problem | Variation |
+|---------|-----------|
+| 2897. Apply Operations on Array to Maximize Sum of Squares | Count conserved bits and pack them into the selected values |
