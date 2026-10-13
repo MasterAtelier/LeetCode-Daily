@@ -2442,3 +2442,8 @@ Use this pattern when operations can redistribute independently conserved bit co
 | Problem | Variation |
 |---------|-----------|
 | 2897. Apply Operations on Array to Maximize Sum of Squares | Count conserved bits and pack them into the selected values |
+## Variation: Greedy Assignment by Contribution Sign
+
+When a rearrangement problem assigns each item to a positive or negative coefficient, sort by the item's contribution magnitude. Assign the largest magnitudes to positive slots and the smallest to negative slots. This is an exchange argument: swapping a larger magnitude into a positive slot and a smaller one into a negative slot never lowers the result.
+
+Example: **3727. Maximum Alternating Sum of Squares**. Squaring makes input signs irrelevant, so ordering by `abs(value)` orders the actual contributions.

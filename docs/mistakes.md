@@ -265,3 +265,14 @@ For problems involving deletion from array ends:
 3. Draw each possible deletion strategy.
 4. Calculate the number of elements removed by each strategy.
 5. Take the minimum.
+# Maximum Alternating Sum of Squares
+Date: 2026-10-13
+
+Mistakes:
+- Initially added the values assigned to negative positions instead of subtracting them. (Implementation)
+
+Lessons:
+- The alternating sign applies to the entire squared term, so negative positions must subtract `x ** 2`.
+
+How to avoid in future:
+- Translate the score definition directly into the update for each position and check a tiny example such as `[1, 2, 3]` by hand.

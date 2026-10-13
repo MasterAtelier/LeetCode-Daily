@@ -33,3 +33,4 @@
 | 301 | Remove Invalid Parentheses | Hard | BFS over State-Space Edits | N/A (review only) | N/A (review only) | No |
 | 2778 | Sum of Squares of Special Elements | Easy | Single-Pass Index Filtering and Aggregation | Yes | No | No |
 # 2897 | Apply Operations on Array to Maximize Sum of Squares | Hard | Greedy Bit Redistribution | N/A (solution provided) | N/A | No |
+# 3727 | Maximum Alternating Sum of Squares | Medium | Greedy Assignment by Contribution | Yes | No | No
